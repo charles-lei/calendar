@@ -1,0 +1,316 @@
+@charset "utf-8";
+.linear {}
+
+html,
+body {
+	margin: 0 auto;
+	max-width: 640px;
+	height: 100%;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+p,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+pre,
+form,
+button,
+input,
+textarea,
+th,
+td {
+	margin: 0;
+	padding: 0;
+	color: #333;
+	word-break: break-all;
+	word-wrap: break-word;
+}
+
+body,
+button,
+input,
+select,
+textarea {
+	font: 12px/1.125 microsoft yahei, arial;
+}
+
+ul,
+ol,
+li {
+	list-style: none;
+}
+
+em,
+i {
+	font-style: normal;
+}
+
+a {
+	color: #ff1;
+	text-decoration: none;
+}
+
+
+.clear {
+	clear: both;
+	height: 0px;
+	overflow: hidden;
+}
+
+.clearfix:after {
+	content: " ";
+	display: block;
+	visibility: hidden;
+	clear: both;
+	height: 0;
+	font-size: 0;
+}
+
+.clearfix {
+	*zoom: 1;
+}
+
+.l1_1 {
+	width: 100%;
+	margin: 0 auto;
+	height: 100%;
+	/* IE8 */
+}
+
+.tit2 {
+	height: 35px;
+	line-height: 35px;
+	border-top: 2px solid #38A2DB;
+	font-size: 16px;
+	background: #f8f8f8;
+	padding: 0 8px;
+}
+
+.tit2 span {
+	float: right;
+	font-size: 14px;
+}
+
+.tit2 span a {
+	display: inline-block;
+	margin-left: 10px;
+}
+
+.tit2 h3 {
+	font-size: 18px;
+	font-weight: normal;
+}
+
+.tit2 i {
+	float: right;
+	font-size: 14px;
+	color: #666;
+}
+
+.dashiji {
+	border-top: 1px solid #e9e9e9;
+	position: relative;
+	width: 100%;
+	FILTER: progid: DXImageTransform.Microsoft.Gradient(gradientType=0, startColorStr=#000, endColorStr=#333);
+	/*IE*/
+	background: -moz-linear-gradient(top, #000, #333);
+	/*火狐*/
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#000), to(#333));
+	/*谷歌*/
+	background-image: -webkit-gradient(linear, left bottom, left top, color-start(0, #333), color-stop(1, #333));
+	/* Safari & Chrome*/
+	filter: progid: DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr='#000', endColorstr='#333');
+	/*IE6 & IE7*/
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#000', endColorstr='#333')";
+}
+
+.dashiji_time {
+	line-height: 53px;
+	font-size: 18px;
+	color: #222;
+	padding-left: 10px;
+}
+
+.dashiji_page {
+	position: absolute;
+	right: 10px;
+	color: #aaa;
+	font-size: 14px;
+	width: 65px;
+	text-align: center;
+	top: 18px;
+}
+
+.dashiji_page span {
+	float: left;
+	width: 12px;
+	height: 13px;
+	margin-top: 1px;
+	cursor: pointer;
+	overflow: hidden;
+	background: #ddd;
+}
+
+.dashiji_page .d_l {
+	background-position: 0 -80px;
+}
+
+.dashiji_page .d_r {
+	float: right;
+	background-position: 0 -94px;
+}
+
+.dashiji_page .d_l2 {
+	background-position: 0 -108px;
+}
+
+.dashiji_page .d_r2 {
+	float: right;
+	background-position: 0 -122px;
+}
+
+.dashiji_page i {
+	color: #38a2db;
+}
+
+.dashiji_box b {
+	display: block;
+	padding: 18px 10px 15px;
+	font-size: 16px;
+}
+
+.dashiji_box .info {
+	padding: 10px;
+	font-size: 16px;
+	color: #c0c0c0;
+	line-height: 20px;
+	font-family: "Microsoft YaHei",微软雅黑,"Microsoft JhengHei",华文细黑,STHeiti,MingLiu;
+	height: 65px;
+}
+
+.dashiji_box{
+	padding: 0 30px;
+}
+.dashiji_box p a {
+	color: #39c;
+}
+
+.carousel-control {
+	position: absolute;
+	top: 140px;
+	width: 40px;
+	height: 40px;
+	margin-top: -20px;
+	font-size: 60px;
+	font-weight: 100;
+	line-height: 30px;
+	color: #ffffff;
+	opacity: 0.5;
+	filter: alpha(opacity=50);
+}
+
+.carousel-control.left {
+	left: 0;
+	text-align: left;
+}
+.carousel-control.right {
+	right: 0;
+	text-align: right;
+}
+.info_title {
+	font-size: 18px;
+	text-decoration: underline;
+	margin: 5px auto;
+	text-align: center;
+	color: #ffffff;
+	font-family: "Microsoft YaHei",微软雅黑,"Microsoft JhengHei",华文细黑,STHeiti,MingLiu;
+}
+
+
+/*日历*/
+
+.calendar {
+	padding: 10px 30px;
+	margin-top: -1px;;
+	height: 40%;
+	z-index: 999;
+		FILTER: progid: DXImageTransform.Microsoft.Gradient(gradientType=0, startColorStr=#333, endColorStr=#ddd);
+	/*IE*/
+	background: -moz-linear-gradient(top, #333, #ddd);
+	/*火狐*/
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#333), to(#ddd));
+	/*谷歌*/
+	background-image: -webkit-gradient(linear, left bottom, left top, color-start(0, #333), color-stop(1, #ddd));
+	/* Safari & Chrome*/
+	filter: progid: DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr='#333', endColorstr='#ddd');
+	/*IE6 & IE7*/
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#333', endColorstr='#ddd')";
+}
+
+#calendar thead {
+	color: #fff;
+}
+
+#calendar td,
+#calendar th {
+	text-align: center;
+	vertical-align: middle;
+	color: #000;
+	height: 30px;
+	width: 40px;
+}
+
+#calendar th {
+	width: 100%;
+}
+
+#calendar div {
+	width: 30px;
+	margin: 0 auto;
+	line-height: 30px;
+	border-radius: 30px;
+	font-size: 14px;
+}
+
+#calendar .c_today {
+	font-weight: bold;
+}
+
+#calendar .has {
+	background: #666;
+	cursor: pointer;
+}
+
+#calendar .current {
+	background: #39c;
+	color: #fff;
+}
+
+#calendar p {
+	cursor: pointer;
+	color: #fff;
+	font-size: 12px;
+	padding: 0;
+	margin: 0;
+}
+
+#calendar .prev,
+#calendar .next {
+	width: 15px;
+}
+
+#calendar #calendar_title {
+	cursor: pointer;
+	text-align: center;
+}
