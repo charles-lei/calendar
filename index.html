@@ -1,78 +1,65 @@
 <!doctype html>
 <html>
+
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<title>Calendar</title>
 		<link rel="stylesheet" href="css/style.css">
-		<script type="text/javascript" src="js/jquery-1.js"></script>
 	</head>
 
 	<body>
-		<div class="l1_1">
+		<div class="l1_1" id = "l1_1">
 			<div class="dashiji" id="rili_info">
 			</div>
 			<div class="calendar" id="calendar_container">
 			</div>
 		</div>
 		<script type="text/javascript">
-		var shopEvents = {
-    "date":"2015-11-13",
-    "showdate": "2015-11-29",
-    "monthEvents":[
-        {
-            "month":"10",
-            "events":[
-                {
-                    "date":"12",
-                    "url":"http://mobile.it168.com/a2015/0928/1765/000001765793.shtml",
-                    "imgurl":"http://image4.it168.com/2015/10/30/b5573d3d-172d-43f4-afbe-8ccaa0c78f98.jpg",
-                    "title":"谷歌12日发布新机＋新系统",
-                    "info":"谷歌将于太平洋时间9月29日早上9点(北京时间9月30日零点)于旧金山召开2015年度新品发布会，届时两款Nexus手机、最终版“棉花糖”Android系统"
-                }
-            ]
-        },
-        {
-            "month":"11",
-            "events":[
-                {
-                    "date":"29",
-                    "url":"http://mobile.it168.com/a2015/0928/1765/000001765793.shtml",
-                    "imgurl":"http://image4.it168.com/2015/10/30/b5573d3d-172d-43f4-afbe-8ccaa0c78f98.jpg",
-                    "title":"谷歌29日发布新机＋新系统",
-                    "info":"谷歌将于太平洋时间9月29日早上9点(北京时间9月30日零点)于旧金山召开2015年度新品发布会，届时两款Nexus手机、最终版“棉花糖”Android系统"
-                },
-                {
-                    "date":"30",
-                    "url":"http://mobile.it168.com/a2015/0928/1765/000001765793.shtml",
-                    "imgurl":"http://image4.it168.com/2015/10/30/59d96ea7-e3fe-4498-b33f-7bed195d2848.jpg",
-                    "title":"谷歌30日发布新机＋新系统",
-                    "info":"谷歌将于太平洋时间9月29日早上9点(北京时间9月30日零点)于旧金山召开2015年度新品发布会，届时两款Nexus手机、最终版“棉花糖”Android系统"
-                }
-            ]
-        },
-        {
-            "month":"12",
-            "events":[
-                {
-                    "date":"01",
-                    "url":"http://mobile.it168.com/a2015/0928/1765/000001765793.shtml",
-                    "imgurl":"http://image4.it168.com/2015/10/30/b5573d3d-172d-43f4-afbe-8ccaa0c78f98.jpg",
-                    "title":"谷歌01日发布新机＋新系统",
-                    "info":"谷歌将于太平洋时间9月29日早上9点(北京时间9月30日零点)于旧金山召开2015年度新品发布会，届时两款Nexus手机、最终版“棉花糖”Android系统"
-                },
-                {
-                    "date":"02",
-                    "url":"http://mobile.it168.com/a2015/0928/1765/000001765793.shtml",
-                    "imgurl":"http://image4.it168.com/2015/10/30/b5573d3d-172d-43f4-afbe-8ccaa0c78f98.jpg",
-                    "title":"谷歌02日发布新机＋新系统",
-                    "info":"谷歌将于太平洋时间9月29日早上9点(北京时间9月30日零点)于旧金山召开2015年度新品发布会，届时两款Nexus手机、最终版“棉花糖”Android系统"
-                }
-            ]
-        }
-    ]
-}
+			var shopEvents = {
+				"date": "2015-11-13",
+				"monthEvents": [{
+					"month": "10",
+					"events": [{
+						"date": "12",
+						"url": "http://mobile.it168.com/a2015/0928/1765/000001765793.shtml",
+						"imgurl": "http://image4.it168.com/2015/10/30/b5573d3d-172d-43f4-afbe-8ccaa0c78f98.jpg",
+						"title": "谷歌12日发布新机＋新系统",
+						"info": "谷歌将于太平洋时间9月29日早上9点(北京时间9月30日零点)于旧金山召开2015年度新品发布会，届时两款Nexus手机、最终版“棉花糖”Android系统"
+					}]
+				}, {
+					"month": "11",
+					"events": [{
+						"date": "29",
+						"url": "http://mobile.it168.com/a2015/0928/1765/000001765793.shtml",
+						"imgurl": "http://image4.it168.com/2015/10/30/b5573d3d-172d-43f4-afbe-8ccaa0c78f98.jpg",
+						"title": "谷歌29日发布新机＋新系统",
+						"info": "谷歌将于太平洋时间9月29日早上9点(北京时间9月30日零点)于旧金山召开2015年度新品发布会，届时两款Nexus手机、最终版“棉花糖”Android系统"
+					}, {
+						"date": "30",
+						"url": "http://mobile.it168.com/a2015/0928/1765/000001765793.shtml",
+						"imgurl": "http://image4.it168.com/2015/10/30/59d96ea7-e3fe-4498-b33f-7bed195d2848.jpg",
+						"title": "谷歌30日发布新机＋新系统",
+						"info": "谷歌将于太平洋时间9月29日早上9点(北京时间9月30日零点)于旧金山召开2015年度新品发布会，届时两款Nexus手机、最终版“棉花糖”Android系统"
+					}]
+				}, {
+					"month": "12",
+					"events": [{
+						"date": "01",
+						"url": "http://mobile.it168.com/a2015/0928/1765/000001765793.shtml",
+						"imgurl": "http://image4.it168.com/2015/10/30/b5573d3d-172d-43f4-afbe-8ccaa0c78f98.jpg",
+						"title": "谷歌01日发布新机＋新系统",
+						"info": "谷歌将于太平洋时间9月29日早上9点(北京时间9月30日零点)于旧金山召开2015年度新品发布会，届时两款Nexus手机、最终版“棉花糖”Android系统"
+					}, {
+						"date": "02",
+						"url": "http://mobile.it168.com/a2015/0928/1765/000001765793.shtml",
+						"imgurl": "http://image4.it168.com/2015/10/30/b5573d3d-172d-43f4-afbe-8ccaa0c78f98.jpg",
+						"title": "谷歌02日发布新机＋新系统",
+						"info": "谷歌将于太平洋时间9月29日早上9点(北京时间9月30日零点)于旧金山召开2015年度新品发布会，届时两款Nexus手机、最终版“棉花糖”Android系统"
+					}]
+				}]
+			}
 			var rili_json = {
 				"nowdate": "2015-11-13",
 				"showdate": "2015-11-14",
@@ -241,33 +228,13 @@
 				}]
 			}
 		</script>
-
+		<script type="text/javascript" src="js/jquery-1.js"></script>
 		<script type="text/javascript" src="js/jcalendar.js"></script>
 		<script type="text/javascript">
-			function LiSelectstart(id) {
-				if(document.getElementById(id)) {
-					var sfEls = document.getElementById(id).getElementsByTagName("li");
-					for(var i = 0; i < sfEls.length; i++) {
-						sfEls[i].onmouseover = function() {
-							this.className = "all";
-						}
-						sfEls[i].onmouseout = function() {
-							this.className = "";
-						}
-					}
-				}
-			}
-			if(document.getElementById("list2")) {
-				var sfEls = document.getElementById("list2").getElementsByTagName("dl");
-				for(var i = 0; i < sfEls.length; i++) {
-					sfEls[i].onmouseover = function() {
-						this.className = "all";
-					}
-					sfEls[i].onmouseout = function() {
-						this.className = "";
-					}
-				}
-			}
+			$(document).ready(function(){
+				calendar_init();
+				fit_height();
+			});
 		</script>
 
 	</body>

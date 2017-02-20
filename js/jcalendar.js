@@ -1,16 +1,9 @@
-function Gid(objectId) {
-	if (document.getElementById && document.getElementById(objectId)) {
-		// W3C DOM
-		return document.getElementById(objectId);
-	} else if (document.all && document.all(objectId)) {
-		// MSIE 4 DOM
-		return document.all(objectId);
-	} else if (document.layers && document.layers[objectId]) {
-		// NN 4 DOM.. note: this won't find nested layers
-		return document.layers[objectId];
-	} else {
-		return false;
-	}
+
+function fit_height() {
+	var client = document.getElementById('l1_1');
+	var calendar = document.getElementById('calendar_container');
+	var calendar_info = document.getElementById('rili_info');
+	calendar.style.height = client.clientHeight - calendar_info.clientHeight + 'px';
 }
 var current_date = shopEvents.date.split("-");
 var current_year = current_date[0],
@@ -20,8 +13,10 @@ var current_year = current_date[0],
 function getFull(value){
 	return value.length == 1 ? "0" + value : value;
 }
+function nextImage(){
 	
-function calendar(year, month, date){
+}
+function preImage(){
 	
 }
 
@@ -79,8 +74,8 @@ JCalendar.prototype.show = function() {
 	return html_str.join("");
 }
 
-function rili_init() {
-	document.getElementById("calendar_container").innerHTML = new JCalendar().show(); /*  |xGv00|106707c554d687c1a77addb2ae941bcc */
+function calendar_init() {
+	document.getElementById("calendar_container").innerHTML = new JCalendar().show(); 
 	var json = shopEvents;
 	for(var i = 0; i < json.monthEvents.length; i++) {
 		if(current_month == json.monthEvents[i].month) {
@@ -93,8 +88,11 @@ function rili_init() {
 						jQuery(this).addClass("has");
 						jQuery(this).attr('onmouseover', 'JCalendar.click(this)');
 					}
-					if(new Date(json.showdate).getDate() == th) {
+					if(new Date(json.date).getDate() == th) {
 						jQuery(this).addClass("current");
+					}
+					else{
+						
 					}
 				});
 			}
@@ -161,7 +159,6 @@ function rili_init() {
 		}
 	}
 	JCalendar.onclick = function(year, month, date) {
-
 		month = getFull(month);
 		date = getFull(date);
 
@@ -176,8 +173,8 @@ function rili_init() {
 						var txtCount = json.monthEvents[j].events[k].info;
 						txtCount = txtCount.length > 59 ? txtCount.substring(0, 59) : txtCount;
 						subHtml += '<div class="dashiji_box">' +
-							'<a href="#carousel-679483" class="left  carousel-control">‹</a>' +
-							'<a href="#carousel-679483" class="right carousel-control">›</a>' +
+							'<a href="#carousel-679483" onclick="PreImage()" class="left carousel-control">‹</a>' +
+							'<a href="#carousel-679483" onclick="NextImage()" class="right carousel-control">›</a>' +
 							'<img src="' + json.monthEvents[j].events[k].imgurl + '"width="100%" height="288" alt="" />' +
 							'<div class="info_title">' + json.monthEvents[j].events[k].title + '</div>' +
 							'<div class="info">' + txtCount + '....<a href="' + json.monthEvents[j].events[k].url + '">【点击领取小礼品】</a></p>' +
@@ -188,15 +185,17 @@ function rili_init() {
 			}
 		}
 		jQuery("#rili_info").html(html);
-
+		
 		JCalendar.cur_year = year;
 		JCalendar.cur_month = month;
 		JCalendar.cur_date = date;
+		fit_height();
 	}
 
 	//初始化未来最近的显示数据
-	var showdate = json.showdate.split("-");
-	JCalendar.onclick(showdate[0], showdate[1], showdate[2]);
+	if(json.showdate) {
+		var showdate = json.showdate.split("-");
+		JCalendar.onclick(showdate[0], showdate[1], showdate[2]);
+	}
 }
-rili_init();
 
