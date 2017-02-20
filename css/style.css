@@ -85,7 +85,6 @@ a {
 	width: 100%;
 	margin: 0 auto;
 	height: 100%;
-	/* IE8 */
 }
 
 .tit2 {
@@ -245,17 +244,17 @@ a {
 	margin-top: -1px;;
 	height: 40%;
 	z-index: 999;
-		FILTER: progid: DXImageTransform.Microsoft.Gradient(gradientType=0, startColorStr=#333, endColorStr=#ddd);
+		FILTER: progid: DXImageTransform.Microsoft.Gradient(gradientType=0, startColorStr=#333, endColorStr=#fff);
 	/*IE*/
-	background: -moz-linear-gradient(top, #333, #ddd);
+	background: -moz-linear-gradient(top, #333, #fff);
 	/*火狐*/
-	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#333), to(#ddd));
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#333), to(#fff));
 	/*谷歌*/
-	background-image: -webkit-gradient(linear, left bottom, left top, color-start(0, #333), color-stop(1, #ddd));
+	background-image: -webkit-gradient(linear, left bottom, left top, color-start(0, #333), color-stop(1, #fff));
 	/* Safari & Chrome*/
-	filter: progid: DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr='#333', endColorstr='#ddd');
+	filter: progid: DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr='#333', endColorstr='#fff');
 	/*IE6 & IE7*/
-	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#333', endColorstr='#ddd')";
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#333', endColorstr='#fff')";
 }
 
 #calendar thead {

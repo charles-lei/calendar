@@ -12,7 +12,23 @@ function Gid(objectId) {
 		return false;
 	}
 }
-
+var current_date = shopEvents.date.split("-");
+var current_year = current_date[0],
+	current_month = getFull(current_date[1]),
+	current_day = getFull(current_date[2]);
+	
+function getFullYear(date) {
+	yr = date.getYear();
+	if (yr < 1000) yr += 1900;
+	return yr;
+}
+function getFull(value){
+	return value.length == 1 ? "0" + value : value;
+}
+	
+function calendar(year, month, date){
+	
+}
 var DtaT = rili_json.nowdate.split("-");
 var day, Oyear = DtaT[0],
 	Omonth = DtaT[1],
@@ -29,26 +45,19 @@ var html = '',
 	
 var today = new Date();
 
-function getFullYear(date) {
-	yr = date.getYear();
-	if (yr < 1000) yr += 1900;
-	return yr;
-}
 
-function JCalendar(year, month, date) {
-	var _date = arguments.length == 0 ? new Date() : new Date(year, month - 1, date);
+function JCalendar() {
 	//实例变量
-	this.year = Oyear;
-	this.month = Omonth;
-	this.date = Oday;
+	this.year = current_year;
+	this.month = current_month;
+	this.date = current_day;
 
 	this.fday = new Date(this.year, this.month - 1, 1).getDay(); //每月第一天的前一天星期数
 	this.dayNum = new Date(this.year, this.month, 0).getDate(); //每月的天数
 	//成员变量，当前年月日
-	JCalendar.cur_year = Oyear;
-	JCalendar.cur_month = Omonth;
-	//JCalendar.cur_date = _date.getDate();
-	JCalendar.cur_date = Oday;
+	JCalendar.cur_year = current_year;
+	JCalendar.cur_month = current_month;
+	JCalendar.cur_date = current_day;
 	setCurTime({
 		//F: Gid("index_history"),
 		Y: JCalendar.cur_year,
@@ -57,11 +66,8 @@ function JCalendar(year, month, date) {
 	});
 }
 JCalendar.prototype.show = function() {
-	var _th = this;
-	var fday = new Date(this.year, this.month - 1, 1).getDay(); //每月第一天的星期数
 	//日历里的每个单元格的数据，预先定义一段空数组，对应日历里第一周空的位置。[注意星期天对应的数是0]
-	var date = new Array(fday > 0 ? fday : 0);
-	var dayNum = new Date(this.year, this.month, 0).getDate(); //每月的天数
+	var date = new Array(this.fday > 0 ? this.fday : 0);
 	var html_str = new Array(); //保存日历控件的HTML代码
 
 	var weekDay = ["M", "T", "W", "T", "F"];
@@ -69,7 +75,7 @@ JCalendar.prototype.show = function() {
 		date.push(j);
 	}
 	html_str.push("<table id='calendar' cellspacing='0' cellpadding='0' width='100%'>");
-	html_str.push("<th colspan='7'><p title='Pre' onclick=\"JCalendar.update(-1);return false\" style='float:left; margin-left:10px; margin-top:2px' class='prev'><img src='img/left_arrow.png' width='15' height='15' /></p><p title='Next Month' onclick=\"JCalendar.update(1);return false\" style='float:right;margin-right:10px;margin-top:2px;' class='next'><img src='img/right_arrow.png' width='15' height='15' /></p><p id='calendar_title' style='color:#c0c0c0;font-weight:normal;font-size:16px;'>" + _th.year + "年" + (parseInt(_th.month)<10?("0"+_th.month):_th.month) + "月</p></th>");
+	html_str.push("<th colspan='7'><p title='Pre' onclick=\"JCalendar.update(-1);return false\" style='float:left; margin-left:10px; margin-top:2px' class='prev'><img src='img/left_arrow.png' width='15' height='15' /></p><p title='Next Month' onclick=\"JCalendar.update(1);return false\" style='float:right;margin-right:10px;margin-top:2px;' class='next'><img src='img/right_arrow.png' width='15' height='15' /></p><p id='calendar_title' style='color:#c0c0c0;font-weight:normal;font-size:16px;'>" + this.year + "年" + getFull(this.month) + "月</p></th>");
 	html_str.push("<tr>");
 	html_str.push("<td>S</td>");
 	for (var i = 0; i < 5; i++) { //填充日历头
@@ -84,7 +90,7 @@ JCalendar.prototype.show = function() {
 		for (var j = 0; j < 7; j++) {
 			tmp = date[7*i+j];
 			tmp = tmp ? tmp : "";
-			if (tmp == _th.date) {
+			if (tmp == this.date) {
 				html_str.push("<td><div id='c_today' class='c_today'>" + JCalendar.cur_date + "</div></td>");
 			}else if (tmp == "") {
 				html_str.push("<td></td>");
@@ -160,6 +166,7 @@ function rili_init(){
 								th = th.length == 1 ? "0" + th : th;
 								if(th == json.list[i].data[j].item[k].thedate){
 									jQuery(this).addClass("has");
+									jQuery(this).attr('onmouseover', 'JCalendar.click(this)');
 								}
 							});
 //alert(json.list[i].data[j].themonth,Omonth,st)
