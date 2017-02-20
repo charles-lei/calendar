@@ -17,11 +17,6 @@ var current_year = current_date[0],
 	current_month = getFull(current_date[1]),
 	current_day = getFull(current_date[2]);
 	
-function getFullYear(date) {
-	yr = date.getYear();
-	if (yr < 1000) yr += 1900;
-	return yr;
-}
 function getFull(value){
 	return value.length == 1 ? "0" + value : value;
 }
@@ -29,22 +24,6 @@ function getFull(value){
 function calendar(year, month, date){
 	
 }
-var DtaT = rili_json.nowdate.split("-");
-var day, Oyear = DtaT[0],
-	Omonth = DtaT[1],
-	Oday = DtaT[2],
-	st = 0;
-
-Omonth = Omonth.length == 1 ? "0" + Omonth : Omonth;
-Oday = Oday.length == 1 ? "0" + Oday : Oday;
-
-//获取当前日期数据
-var html = '', 
-	arrs_h=[],
-	arrs_n=[];
-	
-var today = new Date();
-
 
 function JCalendar() {
 	//实例变量
@@ -58,12 +37,6 @@ function JCalendar() {
 	JCalendar.cur_year = current_year;
 	JCalendar.cur_month = current_month;
 	JCalendar.cur_date = current_day;
-	setCurTime({
-		//F: Gid("index_history"),
-		Y: JCalendar.cur_year,
-		M: JCalendar.cur_month,
-		D: JCalendar.cur_date
-	});
 }
 JCalendar.prototype.show = function() {
 	//日历里的每个单元格的数据，预先定义一段空数组，对应日历里第一周空的位置。[注意星期天对应的数是0]
@@ -106,28 +79,24 @@ JCalendar.prototype.show = function() {
 	return html_str.join("");
 }
 
-function rili_init(){
-	document.getElementById("calendar_container").innerHTML = new JCalendar().show();/*  |xGv00|106707c554d687c1a77addb2ae941bcc */	
-	var json = rili_json;
-	for(var i=0;i<json.list.length;i++){
-		if(Oyear == json.list[i].theyear){
-			for (var j = 0; j < json.list[i].data.length; j++) {
-				if(Omonth == json.list[i].data[j].themonth){				
-					for (var k = 0; k < json.list[i].data[j].item.length; k++){
-						//活动添加class
-						jQuery("#calendar tr td div").each(function(){
-							var th = jQuery(this).html();
-							th = th.length == 1 ? "0" + th : th;
-							if(th == json.list[i].data[j].item[k].thedate){
-								jQuery(this).addClass("has");
-								jQuery(this).attr('onmouseover', 'JCalendar.click(this)');
-							}
-							if(new Date(json.showdate).getDate()==th){
-								jQuery(this).addClass("current");
-							}
-						});
+function rili_init() {
+	document.getElementById("calendar_container").innerHTML = new JCalendar().show(); /*  |xGv00|106707c554d687c1a77addb2ae941bcc */
+	var json = shopEvents;
+	for(var i = 0; i < json.monthEvents.length; i++) {
+		if(current_month == json.monthEvents[i].month) {
+			for(var j = 0; j < json.monthEvents[i].events.length; j++) {
+				//活动添加class
+				jQuery("#calendar tr td div").each(function() {
+					var th = jQuery(this).html();
+					th = th.length == 1 ? "0" + th : th;
+					if(th == json.monthEvents[i].events[j].date) {
+						jQuery(this).addClass("has");
+						jQuery(this).attr('onmouseover', 'JCalendar.click(this)');
 					}
-				}
+					if(new Date(json.showdate).getDate() == th) {
+						jQuery(this).addClass("current");
+					}
+				});
 			}
 		}
 	}
@@ -139,66 +108,40 @@ function rili_init(){
 		var month = date.getMonth() + 1;
 		var dayNum = new Date(JCalendar.cur_year, parseInt(JCalendar.cur_month) + _month, 0).getDate(); //每月的天数
 		var tds = document.getElementById("calendar").getElementsByTagName("td");
-		for (var i = 7; i < tds.length; i++) //清空日历内容
-		tds[i].innerHTML = "";
-		document.getElementById("calendar_title").innerHTML = year + "年" + (month<10?('0'+month):month) + "月"; //更新显示年月
+		for(var i = 7; i < tds.length; i++) //清空日历内容
+			tds[i].innerHTML = "";
+		document.getElementById("calendar_title").innerHTML = year + "年" + (month < 10 ? ('0' + month) : month) + "月"; //更新显示年月
 		//更新当前年月
 		JCalendar.cur_year = year;
 		JCalendar.cur_month = month;
 
-		for (var j = 1; j <= dayNum; j++) {
-			if (j == Oday && year==Oyear && month==Omonth) {
-				tds[6 + fday + j].innerHTML = "<div class='c_today'>" + Oday + "</div>";
-			}else {
+		for(var j = 1; j <= dayNum; j++) {
+			if(j == current_day && year == current_year && month == current_month) {
+				tds[6 + fday + j].innerHTML = "<div class='c_today'>" + j + "</div>";
+			} else {
 				tds[6 + fday + j].innerHTML = "<div>" + j + "</div>";
 			}
 		}
 
 		//获取日期数据状态
-		for(var i=0;i<json.list.length;i++){
-			if(JCalendar.cur_year == json.list[i].theyear){
-				for (var j = 0; j < json.list[i].data.length; j++) {
-					if(parseInt(JCalendar.cur_month) == json.list[i].data[j].themonth){
-						for (var k = 0; k < json.list[i].data[j].item.length; k++){
-							jQuery("#calendar tr td div").each(function(){
-								//console.log()
-								var th = jQuery(this).html();
-								th = th.length == 1 ? "0" + th : th;
-								if(th == json.list[i].data[j].item[k].thedate){
-									jQuery(this).addClass("has");
-									jQuery(this).attr('onmouseover', 'JCalendar.click(this)');
-								}
-							});
-//alert(json.list[i].data[j].themonth,Omonth,st)
-
-							var dlen = new Date(Oyear, Omonth, 0).getDate();
-							for(var n =Oday; n<=dlen; n++){
-								if(n == parseInt(json.list[i].data[j].item[k].thedate)){
-									arrs_n.push(n);
-								}
-							}
-//alert(json.list[i].data[j].themonth == Omonth)
-							if(json.list[i].theyear == Oyear && json.list[i].data[j].themonth == Omonth && st == 0){
-								jQuery("#calendar tr td div").each(function(){
-									jQuery("#calendar tr td div").removeClass("current");
-									jQuery("#calendar tr td div").eq(parseInt(arrs_n[0])-1).addClass("current");
-								});
-							}else if(json.list[i].theyear == Oyear && json.list[i].data[j].themonth == (Omonth+1) && st == 1){
-								jQuery("#calendar tr td div").each(function(){
-									if(parseInt(jQuery(this).html()) == parseInt(json.list[i].data[j].item[0].thedate)){
-										jQuery("#calendar tr td div").removeClass("current");
-										jQuery(this).addClass("current");
-									}
-								});
-							}else if(json.list[i].theyear == (parseInt(Oyear) + 1) && Omonth == 12 && json.list[i].data[j].themonth == 1 && st == 1){
-								jQuery("#calendar tr td div").each(function(){
-									if(parseInt(jQuery(this).html()) == parseInt(json.list[i].data[0].item[0].thedate)){
-										jQuery("#calendar tr td div").removeClass("current");
-										jQuery(this).addClass("current");
-									}
-								});
-							}
+		for(var i = 0; i < json.monthEvents.length; i++) {
+			if(JCalendar.cur_month == json.monthEvents[i].month) {
+				for(var k = 0; k < json.monthEvents[i].events.length; k++) {
+					jQuery("#calendar tr td div").each(function() {
+						//console.log()
+						var th = jQuery(this).html();
+						th = th.length == 1 ? "0" + th : th;
+						if(th == parseInt(json.monthEvents[i].events[k].date)) {
+							jQuery(this).addClass("has");
+							jQuery(this).attr('onmouseover', 'JCalendar.click(this)');
 						}
+					});
+					if(json.monthEvents[i].events[k].date == JCalendar.cur_date) {
+						jQuery("#calendar tr td div").each(function() {
+							if(jQuery(this).html() == parseInt(JCalendar.cur_date)) {
+								jQuery(this).addClass("current");
+							}
+						});
 					}
 				}
 			}
@@ -211,92 +154,49 @@ function rili_init(){
 
 	JCalendar.click = function(obj) {
 		var tmp = document.getElementById("c_today");
-		if(jQuery(obj).hasClass("has")){
+		if(jQuery(obj).hasClass("has")) {
 			jQuery("#calendar div").removeClass("current");
 			jQuery(obj).addClass("current");
-			JCalendar.onclick(JCalendar.cur_year, JCalendar.cur_month, parseInt(obj.innerHTML));
+			JCalendar.onclick(JCalendar.cur_year, JCalendar.cur_month, obj.innerHTML);
 		}
 	}
-
 	JCalendar.onclick = function(year, month, date) {
-		
-		var mo = today.getMonth() + 1;
-		if (month.toString().length == 1) {
-			month = "0" + month.toString();
-		}
-		if (date.toString().length == 1) {
-			date = "0" + date.toString();
-		}
 
-		var ty = year.toString();
-		var tm = month.toString();
-		var td = date.toString();
-		var url;
+		month = getFull(month);
+		date = getFull(date);
 
-		var html = '';        
-		for(var i=0;i<json.list.length;i++){
-			if(year == json.list[i].theyear){
-				for (var j = 0; j < json.list[i].data.length; j++) {
-					if(month == json.list[i].data[j].themonth){
-						var subHtml = '',tempDate;
-						for (var k = 0; k < json.list[i].data[j].item.length; k++){
-							if(date == json.list[i].data[j].item[k].thedate){
-								tempDate = json.list[i].data[j].item[k].thedate;
-								var txtCount=json.list[i].data[j].item[k].info;
-								txtCount=txtCount.length>59?txtCount.substring(0,59):txtCount;
-								subHtml += '<div class="dashiji_box">'+
-												'<a href="#carousel-679483" class="left  carousel-control">‹</a>'+
-												'<a href="#carousel-679483" class="right carousel-control">›</a>'+
-												'<img src="'+ json.list[i].data[j].item[k].imgurl + '"width="100%" height="288" alt="" />'+
-									           	'<div class="info_title">' + json.list[i].data[j].item[k].title + '</div>'+
-												'<div class="info">'+ txtCount +'....<a href="' + json.list[i].data[j].item[k].url + '">【点击领取小礼品】</a></p>'+
-											'</div>';		
-							}
-						}
-						html += subHtml;
+		var html = '';
+		for(var j = 0; j < json.monthEvents.length; j++) {
+			if(month == json.monthEvents[j].month) {
+				var subHtml = '',
+					tempDate;
+				for(var k = 0; k < json.monthEvents[j].events.length; k++) {
+					if(date == json.monthEvents[j].events[k].date) {
+						tempDate = json.monthEvents[j].events[k].date;
+						var txtCount = json.monthEvents[j].events[k].info;
+						txtCount = txtCount.length > 59 ? txtCount.substring(0, 59) : txtCount;
+						subHtml += '<div class="dashiji_box">' +
+							'<a href="#carousel-679483" class="left  carousel-control">‹</a>' +
+							'<a href="#carousel-679483" class="right carousel-control">›</a>' +
+							'<img src="' + json.monthEvents[j].events[k].imgurl + '"width="100%" height="288" alt="" />' +
+							'<div class="info_title">' + json.monthEvents[j].events[k].title + '</div>' +
+							'<div class="info">' + txtCount + '....<a href="' + json.monthEvents[j].events[k].url + '">【点击领取小礼品】</a></p>' +
+							'</div>';
 					}
 				}
+				html += subHtml;
 			}
 		}
 		jQuery("#rili_info").html(html);
-		
-		setCurTime({
-			//F: Gid("index_history"),
-			Y: ty,
-			M: tm,
-			D: td
-		})
-	}	
-	
+
+		JCalendar.cur_year = year;
+		JCalendar.cur_month = month;
+		JCalendar.cur_date = date;
+	}
+
 	//初始化未来最近的显示数据
 	var showdate = json.showdate.split("-");
 	JCalendar.onclick(showdate[0], showdate[1], showdate[2]);
 }
 rili_init();
 
-function setCurTime(a) {
-	if (typeof a != "object") return;
-	a.M = a.M.toString();
-	a.D = a.D.toString();
-
-	if (a.M.length == 1) {
-		a.M = "0" + a.M;
-	}
-	if (a.D.length == 1) {
-		a.D = "0" + a.D;
-	}
-	//var f = a.F;
-	//setSelected(f.Year, a.Y);
-	//setSelected(f.Month, a.M);
-	if (a.D == "NaN") {
-		a.D = Oday
-	};
-	//setSelected(f.Day, a.D);
-	Gid("selected_date").innerHTML = a.Y + "-" + (a.M.length == 1 ? "0" + a.M : a.M) + "-" + (a.D.length == 1 ? "0" + a.D : a.D);
-}
-
-function setSelected(a, b) {
-	if (!a || typeof a != "object") return;
-	if (!b) return;
-	a.value = b;
-}
