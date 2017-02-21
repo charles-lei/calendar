@@ -75,8 +75,24 @@ JCalendar.prototype.show = function() {
 }
 
 function calendar_init() {
+	JCalendar.getRecentDay = function() {
+		var recent_day;
+		for(var i = 0; i < json.monthEvents.length; i++) {
+			if(json.monthEvents[i].month == JCalendar.cur_month) {
+				recent_day = json.monthEvents[i].events[0].date;
+				for(var j = 0; j < json.monthEvents[i].events.length; j++) {
+					if(json.monthEvents[i].events[j].date >= JCalendar.current_day) {
+						recent_day = json.monthEvents[i].event[j].date;
+						break;
+					}
+				}
+			}
+		}
+		return recent_day;
+	}
 	document.getElementById("calendar_container").innerHTML = new JCalendar().show(); 
 	var json = shopEvents;
+	var recentDay = JCalendar.getRecentDay();
 	for(var i = 0; i < json.monthEvents.length; i++) {
 		if(current_month == json.monthEvents[i].month) {
 			for(var j = 0; j < json.monthEvents[i].events.length; j++) {
@@ -88,11 +104,8 @@ function calendar_init() {
 						jQuery(this).addClass("has");
 						jQuery(this).attr('onmouseover', 'JCalendar.click(this)');
 					}
-					if(new Date(json.date).getDate() == th) {
+					if(recentDay == th) {
 						jQuery(this).addClass("current");
-					}
-					else{
-						
 					}
 				});
 			}
@@ -173,8 +186,8 @@ function calendar_init() {
 						var txtCount = json.monthEvents[j].events[k].info;
 						txtCount = txtCount.length > 59 ? txtCount.substring(0, 59) : txtCount;
 						subHtml += '<div class="dashiji_box">' +
-							'<a href="#carousel-679483" onclick="PreImage()" class="left carousel-control">‹</a>' +
-							'<a href="#carousel-679483" onclick="NextImage()" class="right carousel-control">›</a>' +
+							'<a href="#carousel-679483" onclick="preImage()" class="left carousel-control">‹</a>' +
+							'<a href="#carousel-679483" onclick="nextImage()" class="right carousel-control">›</a>' +
 							'<img src="' + json.monthEvents[j].events[k].imgurl + '"width="100%" height="288" alt="" />' +
 							'<div class="info_title">' + json.monthEvents[j].events[k].title + '</div>' +
 							'<div class="info">' + txtCount + '....<a href="' + json.monthEvents[j].events[k].url + '">【点击领取小礼品】</a></p>' +
@@ -190,12 +203,26 @@ function calendar_init() {
 		JCalendar.cur_month = month;
 		JCalendar.cur_date = date;
 		fit_height();
+		
+		var eventCount = 0;
+		for(var j = 0; j < json.monthEvents.length; j++) {
+			for(var k = 0; k < json.monthEvents[j].events.length; k++) {
+				eventCount++;
+			}
+		}
+		if(eventCount > 1){
+			jQuery(".carousel-control").css("visibility","visible")
+		}
+		else{
+			jQuery(".carousel-control").css("visibility","hidden
+			")
+		}
 	}
+	
 
-	//初始化未来最近的显示数据
-	if(json.showdate) {
-		var showdate = json.showdate.split("-");
-		JCalendar.onclick(showdate[0], showdate[1], showdate[2]);
-	}
+	if(recentDay != undefined){
+		JCalendar.onclick(current_year, current_month, recentDay);
+	}	
 }
+
 
