@@ -13,11 +13,83 @@ var current_year = current_date[0],
 function getFull(value){
 	return value.length == 1 ? "0" + value : value;
 }
+
+function foundSelectedDatePosition(){
+	var selectedPosition = 1;
+	for(var i = 0; i<shopEvents.monthEvents.length; i++){
+		for(var j = 0; j<shopEvents.monthEvents[i].events.length; j++){
+			if(shopEvents.monthEvents[i].year == JCalendar.selected_year && shopEvents.monthEvents[i].month == JCalendar.selected_month && shopEvents.monthEvents[i].events[j].date == JCalendar.selected_date){
+				return selectedPosition;
+			}
+			selectedPosition++;
+		}
+	}
+	return selectedPosition;
+}
 function nextImage(){
-	
+	var events = shopEvents.monthEvents[0].events.concat(shopEvents.monthEvents[1].events.concat(shopEvents.monthEvents[2].events));
+	var selectedPosition = foundSelectedDatePosition();
+	var i = 0, sum = 0, size = selectedPosition%events.length+1;
+	while(sum < size){
+		sum += shopEvents.monthEvents[i++].events.length;
+	}
+	JCalendar.selected_year = shopEvents.monthEvents[i-1].year;
+	JCalendar.selected_month = shopEvents.monthEvents[i-1].month;
+	JCalendar.selected_date = events[size-1].date;
+	var txtCount = events[size-1].info;
+	txtCount = txtCount.length > 54 ? txtCount.substring(0, 54) : txtCount;
+	var html = '<div class="dashiji_box">' +
+							'<a href="#carousel-679483" onclick="preImage()" class="left carousel-control">‹</a>' +
+							'<a href="#carousel-679483" onclick="nextImage()" class="right carousel-control">›</a>' +
+							'<img src="' + events[size-1].imgurl + '"width="100%" height="288" alt="" />' +
+							'<div class="info_title">' + events[size-1].title + '</div>' +
+							'<div class="info">' + txtCount + '....<a href="' + events[size-1].url + '">【点击领取小礼品】</a></p>' +
+							'</div>';
+	jQuery("#rili_info").html(html);
+	jQuery("#calendar tr td div").removeClass("current");
+	if(JCalendar.cur_year == JCalendar.selected_year && JCalendar.cur_month == JCalendar.selected_month) {
+		
+		jQuery("#calendar tr td div").each(function() {
+			var th = jQuery(this).html();
+			th = th.length == 1 ? "0" + th : th;
+
+			if(JCalendar.selected_date == th) {
+				jQuery(this).addClass("current");
+			}
+		});
+	}
 }
 function preImage(){
-	
+	var events = shopEvents.monthEvents[0].events.concat(shopEvents.monthEvents[1].events.concat(shopEvents.monthEvents[2].events));
+	var selectedPosition = foundSelectedDatePosition();
+	var i = 0, sum = 0, size = selectedPosition==1? events.length:selectedPosition-1;
+	while(sum < size){
+		sum += shopEvents.monthEvents[i++].events.length;
+	}
+	JCalendar.selected_year = shopEvents.monthEvents[i-1].year;
+	JCalendar.selected_month = shopEvents.monthEvents[i-1].month;
+	JCalendar.selected_date = events[size-1].date;
+	var txtCount = events[size-1].info;
+	txtCount = txtCount.length > 54 ? txtCount.substring(0, 54) : txtCount;
+	var html = '<div class="dashiji_box">' +
+							'<a href="#carousel-679483" onclick="preImage()" class="left carousel-control">‹</a>' +
+							'<a href="#carousel-679483" onclick="nextImage()" class="right carousel-control">›</a>' +
+							'<img src="' + events[size-1].imgurl + '"width="100%" height="288" alt="" />' +
+							'<div class="info_title">' + events[size-1].title + '</div>' +
+							'<div class="info">' + txtCount + '....<a href="' + events[size-1].url + '">【点击领取小礼品】</a></p>' +
+							'</div>';
+	jQuery("#rili_info").html(html);
+	jQuery("#calendar tr td div").removeClass("current");
+	if(JCalendar.cur_year == JCalendar.selected_year && JCalendar.cur_month == JCalendar.selected_month) {
+		jQuery("#calendar tr td div").each(function() {
+			var th = jQuery(this).html();
+			th = th.length == 1 ? "0" + th : th;
+
+			if(JCalendar.selected_date == th) {
+				jQuery(this).addClass("current");
+			}
+		});
+	}
 }
 
 function JCalendar() {
@@ -83,7 +155,7 @@ function calendar_init() {
 	JCalendar.getRecentDay = function() {
 		var recent_day;
 		for(var i = 0; i < json.monthEvents.length; i++) {
-			if(json.monthEvents[i].month == JCalendar.cur_month && json.monthEvents[i].year == JCalendar.cur_year) {
+			if(json.monthEvents[i].month == JCalendar.cur_month && json.monthEvents[i].year == JCalendar.cur_year && json.monthEvents[i].events.length>0) {
 				recent_day = json.monthEvents[i].events[0].date;
 				for(var j = 0; j < json.monthEvents[i].events.length; j++) {
 					if(json.monthEvents[i].events[j].date >= JCalendar.cur_date) {
@@ -201,7 +273,7 @@ function calendar_init() {
 					if(date == json.monthEvents[j].events[k].date) {
 						tempDate = json.monthEvents[j].events[k].date;
 						var txtCount = json.monthEvents[j].events[k].info;
-						txtCount = txtCount.length > 59 ? txtCount.substring(0, 59) : txtCount;
+						txtCount = txtCount.length > 54 ? txtCount.substring(0, 54) : txtCount;
 						subHtml += '<div class="dashiji_box">' +
 							'<a href="#carousel-679483" onclick="preImage()" class="left carousel-control">‹</a>' +
 							'<a href="#carousel-679483" onclick="nextImage()" class="right carousel-control">›</a>' +
